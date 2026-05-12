@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import SocialButton from "./SocialButton";
+import { register } from "@/app/(auth)/signup/actions";
 
 function GithubIcon() {
   return (
@@ -45,12 +48,69 @@ function FortyTwoIcon() {
 }
 
 export default function SignupForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, boolean>>({});
+
+  function setFieldError(field: string, message: string) {
+    setFieldErrors((prev) => ({ ...prev, [field]: true }));
+    toast.error(message);
+  }
+
+  function clearFieldError(field: string) {
+    setFieldErrors((prev) => ({ ...prev, [field]: false }));
+  }
+
+  function inputClass(field: string, extra = "") {
+    return `bg-auth-background/60 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary ${extra} ${
+      fieldErrors[field] ? "border-red-500" : "border-secondary-text/50"
+    }`;
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const firstName = (data.get("firstName") as string).trim();
+    const lastName = (data.get("lastName") as string).trim();
+    const username = (data.get("username") as string).trim();
+    const email = (data.get("email") as string).trim();
+    const password = data.get("password") as string;
+    const confirmPassword = data.get("confirmPassword") as string;
+
+    if (!firstName) return setFieldError("firstName", "First name is required");
+    if (!lastName) return setFieldError("lastName", "Last name is required");
+    if (!username || username.length < 3) return setFieldError("username", "Username must be at least 3 characters");
+    if (username.length > 20) return setFieldError("username", "Username must be at most 20 characters");
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setFieldError("email", "Please enter a valid email address");
+    if (!password || password.length < 8) return setFieldError("password", "Password must be at least 8 characters");
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) return setFieldError("password", "Password must contain uppercase, lowercase, and a number");
+    if (password !== confirmPassword) return setFieldError("confirmPassword", "Passwords do not match");
+    if (!terms) {
+      toast.error("You must accept the terms and privacy policy");
+      return;
+    }
+
+    setLoading(true);
+    const result = await register({ firstName, lastName, username, email, password });
+    setLoading(false);
+
+    if (result.error) {
+      toast.error(result.error);
+      return;
+    }
+
+    toast.success("Account created! Please sign in.");
+    router.push("/signin");
+  }
 
   return (
     <div className="w-full max-w-sm">
-      <h1 className="font-bold text-4xl text-primary-text mb-1" style={{ fontFamily: "cursive" }}>
+      <h1 className="font-bold text-4xl text-primary-text mb-1 font-[cursive]">
         HyperTube
       </h1>
 
@@ -59,27 +119,19 @@ export default function SignupForm() {
         Create Account with
       </p>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex gap-3">
           <div className="flex-1 space-y-1">
             <Label htmlFor="firstName" className="text-primary-text text-xs">
               First Name
             </Label>
-            <Input
-              id="firstName"
-              placeholder="First Name"
-              className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary"
-            />
+            <Input id="firstName" name="firstName" placeholder="First Name" className={inputClass("firstName")} onChange={() => clearFieldError("firstName")} />
           </div>
           <div className="flex-1 space-y-1">
             <Label htmlFor="lastName" className="text-primary-text text-xs">
               Last Name
             </Label>
-            <Input
-              id="lastName"
-              placeholder="Last Name"
-              className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary"
-            />
+            <Input id="lastName" name="lastName" placeholder="Last Name" className={inputClass("lastName")} onChange={() => clearFieldError("lastName")} />
           </div>
         </div>
 
@@ -89,8 +141,10 @@ export default function SignupForm() {
           </Label>
           <Input
             id="username"
+            name="username"
             placeholder="Username"
-            className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary"
+            className={inputClass("username")}
+            onChange={() => clearFieldError("username")}
           />
         </div>
 
@@ -100,9 +154,11 @@ export default function SignupForm() {
           </Label>
           <Input
             id="email"
+            name="email"
             type="email"
             placeholder="Your Email"
-            className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary"
+            className={inputClass("email")}
+            onChange={() => clearFieldError("email")}
           />
         </div>
 
@@ -113,9 +169,11 @@ export default function SignupForm() {
           <div className="relative">
             <Input
               id="password"
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary pr-10"
+              className={inputClass("password", "pr-10")}
+              onChange={() => clearFieldError("password")}
             />
             <button
               type="button"
@@ -134,9 +192,11 @@ export default function SignupForm() {
           <div className="relative">
             <Input
               id="confirmPassword"
+              name="confirmPassword"
               type={showConfirm ? "text" : "password"}
               placeholder="Confirm Password"
-              className="bg-auth-background/60 border-secondary-text/50 text-secondary-text placeholder:text-secondary-text/50 focus-visible:ring-primary pr-10"
+              className={inputClass("confirmPassword", "pr-10")}
+              onChange={() => clearFieldError("confirmPassword")}
             />
             <button
               type="button"
@@ -151,6 +211,8 @@ export default function SignupForm() {
         <div className="flex items-center gap-2">
           <Checkbox
             id="terms"
+            checked={terms}
+            onCheckedChange={(v) => setTerms(v === true)}
             className="border-primary data-[state=checked]:bg-primary data-[state=checked]:border-primary"
           />
           <label htmlFor="terms" className="text-xs text-primary cursor-pointer ">
@@ -161,7 +223,8 @@ export default function SignupForm() {
 
         <Button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/90 font-semibold"
+          loading={loading}
+          className="w-full h-10 bg-primary hover:bg-primary/90 font-semibold"
         >
           Create Account
         </Button>

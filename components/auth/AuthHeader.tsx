@@ -10,15 +10,19 @@ export default function AuthHeader() {
       </Link>
 
       <div className="flex items-center gap-3">
-        <Button
-          variant="outline"
-          className="border-primary-text/40 text-primary-text bg-transparent hover:bg-primary-text/10"
-        >
-          Sign In
-        </Button>
-        <Button className="bg-primary hover:bg-primary/90">
-          Register
-        </Button>
+        <Link href="/signin">
+          <Button
+            variant="outline"
+            className="border-primary-text/40 text-primary-text bg-transparent hover:bg-primary-text/10"
+          >
+            Sign In
+          </Button>
+        </Link>
+        <Link href="/signup">
+          <Button className="bg-primary hover:bg-primary/90">
+            Register
+          </Button>
+        </Link>
       </div>
     </header>
   );
