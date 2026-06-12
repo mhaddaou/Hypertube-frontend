@@ -20,4 +20,28 @@
     background-color: #1B0303;
     color: #ffffff;
   }
+
+  /* Custom scrollbar — slim, theme-colored */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #FB9722 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #FB9722;
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #d97e15;
+  }
 }

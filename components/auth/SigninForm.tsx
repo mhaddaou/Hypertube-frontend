@@ -11,14 +11,6 @@ import { Label } from "@/components/ui/label";
 import SocialButton from "./SocialButton";
 import { loginAction } from "@/app/(auth)/signin/actions";
 
-function GithubIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-    </svg>
-  );
-}
-
 function DiscordIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -46,10 +38,24 @@ function FortyTwoIcon() {
   );
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+type OAuthProvider = "42" | "google" | "discord";
+
 export default function SigninForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<OAuthProvider | null>(null);
+
+  function startOAuth(provider: OAuthProvider) {
+    setOauthLoading(provider);
+    window.location.href = `${API_URL}/api/auth/${provider}`;
+  }
+
+  const handle42Login = () => startOAuth("42");
+  const handleGoogleLogin = () => startOAuth("google");
+  const handleDiscordLogin = () => startOAuth("discord");
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -65,10 +71,15 @@ export default function SigninForm() {
     const result = await loginAction({ username, password });
     setLoading(false);
 
-    if (result.error) {
+    if (result.data === null) {
       toast.error(result.error);
       return;
     }
+
+    const { access_token, refresh_token, user_data } = result.data;
+    localStorage.setItem("access_token", access_token);
+    localStorage.setItem("refresh_token", refresh_token);
+    localStorage.setItem("user_data", JSON.stringify(user_data));
 
     toast.success("Welcome back!");
     router.push("/");
@@ -76,13 +87,16 @@ export default function SigninForm() {
 
   return (
     <div className="w-full max-w-sm">
-      <h1 className="font-bold text-4xl text-primary-text mb-1 font-[cursive]">
+      <h1 className="font-bold text-4xl text-primary-text mb-10 font-[cursive] text-center">
         HyperTube
       </h1>
 
-      <p className="text-primary text-sm font-semibold mb-6 flex items-center gap-2">
-        <span className="inline-block w-8 h-px bg-primary" />
+      <p className="text-primary  font-semibold mb-6 flex items-center gap-8">
+        <span className="inline-block w-1/4 h-1 bg-white rounded " />
+        <span className="">
         Login To Your Account
+
+        </span>
       </p>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -126,7 +140,12 @@ export default function SigninForm() {
           </Link>
         </div>
 
-        <Button type="submit" loading={loading} className="w-full h-10 bg-primary hover:bg-primary/90 font-semibold">
+        <Button
+          type="submit"
+          loading={loading}
+          disabled={oauthLoading !== null}
+          className="w-full h-10 bg-primary hover:bg-primary/90 font-semibold"
+        >
           Log In
         </Button>
 
@@ -137,10 +156,24 @@ export default function SigninForm() {
         </div>
 
         <div className="flex justify-center gap-4">
-          <SocialButton icon={<GithubIcon />} />
-          <SocialButton icon={<DiscordIcon />} />
-          <SocialButton icon={<GoogleIcon />} />
-          <SocialButton icon={<FortyTwoIcon />} />
+          <SocialButton
+            icon={<DiscordIcon />}
+            onClick={handleDiscordLogin}
+            loading={oauthLoading === "discord"}
+            disabled={oauthLoading !== null && oauthLoading !== "discord"}
+          />
+          <SocialButton
+            icon={<GoogleIcon />}
+            onClick={handleGoogleLogin}
+            loading={oauthLoading === "google"}
+            disabled={oauthLoading !== null && oauthLoading !== "google"}
+          />
+          <SocialButton
+            icon={<FortyTwoIcon />}
+            onClick={handle42Login}
+            loading={oauthLoading === "42"}
+            disabled={oauthLoading !== null && oauthLoading !== "42"}
+          />
         </div>
 
         <p className="text-center text-secondary-text text-xs">

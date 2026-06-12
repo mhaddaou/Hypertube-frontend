@@ -7,10 +7,20 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface LoginUserData {
+  id: string;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string | null;
+  language: string;
+}
+
 export interface LoginResult {
   access_token: string;
   refresh_token: string;
-  user_data: { id: string; username: string };
+  user_data: LoginUserData;
 }
 
 export type ActionResult<T> =
