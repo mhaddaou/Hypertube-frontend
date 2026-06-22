@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" role="img" aria-labelledby="title desc">
+  <title id="title">Spider-Verse temporary poster placeholder</title>
+  <desc id="desc">Replace with public/images/popular/spider-verse.jpg when available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f7e9a5"/>
+      <stop offset=".55" stop-color="#e15a34"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="520" fill="url(#bg)"/>
+  <path d="M0 378c120-94 249-129 386-104 112 20 217 4 314-48v294H0Z" fill="#101010" opacity=".32"/>
+  <g fill="#141414">
+    <circle cx="360" cy="178" r="54"/>
+    <path d="m360 230-86 184h72l14-74 48 74h78l-84-184Z"/>
+    <path d="M309 270 142 192M406 270l168-75M323 326l-176 70M398 326l176 68" stroke="#141414" stroke-width="24" stroke-linecap="round"/>
+  </g>
+  <text x="350" y="446" text-anchor="middle" fill="#ff2c2c" stroke="#111" stroke-width="4" font-family="Impact, Arial Black, sans-serif" font-size="68">SPIDER-VERSE</text>
+  <text x="350" y="486" text-anchor="middle" fill="#ff9f00" font-family="Arial, sans-serif" font-size="18" font-weight="700">temporary poster - public/images/popular/spider-verse.jpg</text>
+</svg>

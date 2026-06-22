@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 920" role="img" aria-labelledby="title desc">
+  <title id="title">Dark cinematic Spider-Man fallback background</title>
+  <desc id="desc">A restrained dark red and blue cinematic fallback background used only when no real movie image is available.</desc>
+  <defs>
+    <linearGradient id="base" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#07090d"/>
+      <stop offset=".42" stop-color="#121823"/>
+      <stop offset="1" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="red" cx="28%" cy="42%" r="38%">
+      <stop offset="0" stop-color="#6f1219" stop-opacity=".42"/>
+      <stop offset=".48" stop-color="#3f0b11" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#050506" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blue" cx="70%" cy="28%" r="34%">
+      <stop offset="0" stop-color="#244560" stop-opacity=".36"/>
+      <stop offset=".55" stop-color="#102130" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#050506" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="horizon" x1="0" x2="1">
+      <stop offset="0" stop-color="#050506" stop-opacity=".96"/>
+      <stop offset=".48" stop-color="#1a1110" stop-opacity=".44"/>
+      <stop offset="1" stop-color="#050506" stop-opacity=".98"/>
+    </linearGradient>
+  </defs>
+  <rect width="1800" height="920" fill="url(#base)"/>
+  <rect width="1800" height="920" fill="url(#red)"/>
+  <rect width="1800" height="920" fill="url(#blue)"/>
+  <path d="M0 616c260-98 548-126 864-84 335 45 647-3 936-144v532H0Z" fill="url(#horizon)" opacity=".72"/>
+  <g stroke="#7d1017" stroke-width="2" opacity=".08">
+    <path d="M0 132c275 116 530 190 765 222 326 45 671 5 1035-120"/>
+    <path d="M0 316c306 78 592 122 858 132 320 13 634-29 942-126"/>
+    <path d="M0 502c279 22 553 21 821-2 345-30 671-98 979-204"/>
+  </g>
+  <g stroke="#40647e" stroke-width="1.5" opacity=".08">
+    <path d="M232 0c148 184 232 368 251 552"/>
+    <path d="M612 0c92 224 122 453 91 686"/>
+    <path d="M1170 0c-77 224-91 455-43 692"/>
+    <path d="M1516 0c-136 177-205 373-207 588"/>
+  </g>
+  <rect width="1800" height="920" fill="#050506" opacity=".18"/>
+</svg>
