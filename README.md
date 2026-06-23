@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# H-Tube / HyperTube Frontend
 
-## Getting Started
+Movie streaming frontend built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Current Routes
+
+- `/` - landing page
+- `/movies/[id]` - movie details page
+- `/movies/[id]/watch` - watch/player placeholder page
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The movie metadata API base URL can be configured with:
 
-## Learn More
+```bash
+NEXT_PUBLIC_MOVIE_API_BASE_URL=https://yts.am/api/v2
+```
 
-To learn more about Next.js, take a look at the following resources:
+If the variable is not set, the frontend falls back to the same URL for local development.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Data Boundaries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- API access is centralized in `lib/moviesApi.ts`.
+- Raw API movies are normalized in `lib/movieMappers.ts`.
+- Shared movie types live in `types/movie.ts`.
+- Temporary fallback movies, comments, and watchlist data live in `data/`.
 
-## Deploy on Vercel
+The frontend uses movie metadata and image URLs only. Playback is currently a safe placeholder/sample-video flow until a legal backend streaming source is connected.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Verification
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm run build
+```

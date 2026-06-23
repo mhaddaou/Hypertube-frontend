@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 780" role="img" aria-labelledby="title desc">
+  <title id="title">Spider-Man No Way Home poster fallback</title>
+  <desc id="desc">A red and blue superhero-style poster fallback for the HyperTube hero carousel.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#16304e"/>
+      <stop offset=".45" stop-color="#b91822"/>
+      <stop offset="1" stop-color="#07101c"/>
+    </linearGradient>
+    <radialGradient id="eye" cx="50%" cy="35%" r="35%">
+      <stop offset="0" stop-color="#f3fbff"/>
+      <stop offset=".5" stop-color="#9fd1e6"/>
+      <stop offset="1" stop-color="#0b1623" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="520" height="780" fill="url(#bg)"/>
+  <circle cx="260" cy="268" r="188" fill="#b51622"/>
+  <path d="M100 238c76-64 176-86 300-66-80 76-169 111-267 104-35-3-46-15-33-38Z" fill="url(#eye)" opacity=".95"/>
+  <path d="M420 235c-75-61-173-80-293-58 78 72 164 104 259 96 34-3 45-16 34-38Z" fill="#e3f8ff" opacity=".88"/>
+  <g stroke="#07121f" stroke-width="10" opacity=".55">
+    <path d="M260 86v420M94 280c105 42 216 43 333 4M125 155c91 58 181 61 270 8M72 412c127-48 253-48 378 0"/>
+    <path d="M151 95c42 117 50 234 25 351M369 93c-44 115-51 232-21 351M218 83c-20 123-21 243-4 360M302 83c22 124 23 244 2 360"/>
+  </g>
+  <path d="M36 600c116-82 230-119 342-111 54 4 90 26 106 65v226H36Z" fill="#07101c" opacity=".72"/>
+  <text x="260" y="650" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="44" font-weight="700" font-style="italic">Spider man</text>
+  <text x="260" y="700" text-anchor="middle" fill="#ff9f00" font-family="Georgia, serif" font-size="38" font-weight="700" font-style="italic">No way Home</text>
+</svg>

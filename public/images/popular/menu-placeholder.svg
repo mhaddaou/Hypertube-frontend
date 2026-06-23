@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Menu temporary wide movie image placeholder</title>
+  <desc id="desc">Replace with public/images/popular/menu.jpg when available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#090605"/>
+      <stop offset="0.55" stop-color="#241612"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="plate" cx="50%" cy="62%" r="45%">
+      <stop offset="0" stop-color="#eadfca"/>
+      <stop offset="0.54" stop-color="#75695b"/>
+      <stop offset="1" stop-color="#15110e"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="520" fill="url(#bg)"/>
+  <ellipse cx="600" cy="330" rx="430" ry="128" fill="url(#plate)" opacity=".58"/>
+  <g fill="#d7d0c8" opacity=".9">
+    <circle cx="368" cy="178" r="72"/>
+    <circle cx="548" cy="151" r="58"/>
+    <circle cx="708" cy="158" r="64"/>
+    <circle cx="852" cy="188" r="54"/>
+  </g>
+  <g fill="#141414">
+    <rect x="310" y="220" width="120" height="58" rx="8"/>
+    <rect x="494" y="207" width="108" height="62" rx="8"/>
+    <rect x="648" y="215" width="124" height="60" rx="8"/>
+    <rect x="805" y="232" width="102" height="50" rx="8"/>
+  </g>
+  <text x="600" y="144" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="92" font-weight="700" letter-spacing="28">MENU</text>
+  <text x="600" y="448" text-anchor="middle" fill="#ff9f00" font-family="Arial, sans-serif" font-size="28" font-weight="700">temporary image - public/images/popular/menu.jpg</text>
+</svg>

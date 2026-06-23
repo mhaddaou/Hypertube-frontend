@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" role="img" aria-labelledby="title desc">
+  <title id="title">Dune temporary poster placeholder</title>
+  <desc id="desc">Replace with public/images/popular/dune.jpg when available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#3a1609"/>
+      <stop offset=".5" stop-color="#d9671d"/>
+      <stop offset="1" stop-color="#120604"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="520" fill="url(#bg)"/>
+  <circle cx="350" cy="236" r="166" fill="#f5b35a" opacity=".28"/>
+  <g fill="#1a0b07" opacity=".82">
+    <circle cx="170" cy="220" r="54"/>
+    <circle cx="282" cy="178" r="58"/>
+    <circle cx="416" cy="176" r="58"/>
+    <circle cx="532" cy="224" r="54"/>
+    <path d="M74 390c121-112 239-168 356-168 78 0 144 34 198 102v196H74Z"/>
+  </g>
+  <text x="350" y="420" text-anchor="middle" fill="#ffdf9d" font-family="Georgia, serif" font-size="88" font-weight="700" letter-spacing="22">DUNE</text>
+  <text x="350" y="486" text-anchor="middle" fill="#ff9f00" font-family="Arial, sans-serif" font-size="18" font-weight="700">temporary poster - public/images/popular/dune.jpg</text>
+</svg>

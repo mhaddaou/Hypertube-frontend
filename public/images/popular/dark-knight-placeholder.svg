@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" role="img" aria-labelledby="title desc">
+  <title id="title">The Dark Knight temporary poster placeholder</title>
+  <desc id="desc">Replace with public/images/popular/dark-knight.jpg when available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#b9e4f6"/>
+      <stop offset=".45" stop-color="#25465c"/>
+      <stop offset="1" stop-color="#070707"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="520" fill="url(#bg)"/>
+  <path d="M160 90h380v360H160z" fill="#111" opacity=".72"/>
+  <path d="M210 144h90v210h-90zM340 104h90v250h-90zM470 162h70v192h-70z" fill="#202b31"/>
+  <path d="M266 128c50 35 105 35 164 0-22 48-19 89 8 126-61-27-119-27-176 0 27-44 28-86 4-126Z" fill="#ff7a00"/>
+  <text x="350" y="448" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="42" font-weight="700">THE DARK KNIGHT</text>
+  <text x="350" y="486" text-anchor="middle" fill="#ff9f00" font-family="Arial, sans-serif" font-size="18" font-weight="700">temporary poster - public/images/popular/dark-knight.jpg</text>
+</svg>

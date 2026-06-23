@@ -2,7 +2,14 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+
 @custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #050505;
+  --foreground: #f7f7f7;
+}
+
 
 @theme inline {
   --color-primary: #FB9722;

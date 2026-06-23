@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 880" role="img" aria-labelledby="title desc">
+  <title id="title">1917 temporary tall movie poster placeholder</title>
+  <desc id="desc">Replace with public/images/popular/1917.jpg when available.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#244966"/>
+      <stop offset=".45" stop-color="#d48333"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="880" fill="url(#sky)"/>
+  <circle cx="504" cy="276" r="134" fill="#f0a23b" opacity=".75"/>
+  <path d="M0 620c138-75 288-92 451-48 102 28 184 19 249-30v338H0Z" fill="#080808"/>
+  <path d="M370 398 272 744h88l40-169 70 169h92L420 398Z" fill="#151515"/>
+  <text x="350" y="348" text-anchor="middle" fill="#101010" font-family="Impact, Arial Black, sans-serif" font-size="260" font-weight="900">19</text>
+  <text x="350" y="815" text-anchor="middle" fill="#ff9f00" font-family="Arial, sans-serif" font-size="25" font-weight="700">temporary poster - public/images/popular/1917.jpg</text>
+</svg>
