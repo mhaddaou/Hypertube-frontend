@@ -3,12 +3,9 @@ import { Footer } from "@/components/layout/Footer";
 import { DetailsHero } from "@/components/movie-details/DetailsHero";
 import { Discussion } from "@/components/movie-details/Discussion";
 import { MovieRail } from "@/components/movie-details/MovieRails";
+import { getMovieDetails } from "@/actions/movies";
 import { fallbackMovies, fallbackWatchlist, spiderManFallbackMovie } from "@/data/fallbackMovies";
-import {
-  getMovieDetails,
-  getMovies,
-  getMovieSuggestions,
-} from "@/lib/moviesApi";
+import { getMovies, getMovieSuggestions } from "@/lib/moviesApi";
 
 type MovieDetailsPageProps = {
   params: Promise<{ id: string }>;

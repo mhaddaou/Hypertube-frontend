@@ -22,12 +22,16 @@ export function VideoPlayer({
       <div className="aspect-video w-full">
         {sampleVideoSrc ? (
           <video
+            key={sampleVideoSrc}
             className="h-full w-full bg-black object-contain"
             controls
+            autoPlay
+            playsInline
+            crossOrigin="anonymous"
             poster={movie.backgroundImage || movie.posterImage}
-            preload="metadata"
+            preload="auto"
+            src={sampleVideoSrc}
           >
-            <source src={sampleVideoSrc} type="video/mp4" />
             Video source not available yet.
           </video>
         ) : (

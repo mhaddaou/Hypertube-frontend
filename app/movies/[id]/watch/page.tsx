@@ -1,23 +1,13 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-
+import { getMovieDetails } from "@/actions/movies";
+import { getStreamUrl } from "@/actions/stream";
 import { MovieInfoPanel } from "@/components/movie-watch/MovieInfoPanel";
 import { VideoPlayer } from "@/components/movie-watch/VideoPlayer";
 import { WatchHeader } from "@/components/movie-watch/WatchHeader";
 import { fallbackMovies, spiderManFallbackMovie } from "@/data/fallbackMovies";
-import { getMovieDetails } from "@/lib/moviesApi";
 
 type MovieWatchPageProps = {
   params: Promise<{ id: string }>;
 };
-
-const SAMPLE_VIDEO_PATH = "/videos/sample.mp4";
-
-function getSampleVideoSrc() {
-  const sampleVideoFile = join(process.cwd(), "public", "videos", "sample.mp4");
-
-  return existsSync(sampleVideoFile) ? SAMPLE_VIDEO_PATH : null;
-}
 
 export default async function MovieWatchPage({ params }: MovieWatchPageProps) {
   const { id } = await params;
@@ -27,7 +17,7 @@ export default async function MovieWatchPage({ params }: MovieWatchPageProps) {
     movieDetails ??
     fallbackMovies.find((item) => item.id === movieId) ??
     spiderManFallbackMovie;
-  const sampleVideoSrc = getSampleVideoSrc();
+  const streamSrc = Number.isFinite(movieId) ? getStreamUrl(movieId) : null;
 
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#050505] text-white">
@@ -36,7 +26,7 @@ export default async function MovieWatchPage({ params }: MovieWatchPageProps) {
       <WatchHeader movie={movie} />
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-12">
-        <VideoPlayer movie={movie} sampleVideoSrc={sampleVideoSrc} />
+        <VideoPlayer movie={movie} sampleVideoSrc={streamSrc} />
         <MovieInfoPanel movie={movie} />
       </div>
     </main>

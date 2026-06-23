@@ -73,3 +73,42 @@ export type MovieApiDetailsResponse = {
   status?: string;
   data?: { movie?: RawYtsMovie };
 };
+
+export type MovieProviderName = "yts" | "tmdb";
+
+export type MovieDetailsSummary = {
+  provider: MovieProviderName;
+  provider_id: string;
+  id: number | string;
+  name: string;
+  imdb_rating: number | null;
+  year: number | null;
+  length: number | null;
+  genre?: string | null;
+  director?: string | null;
+  cast?: string | null;
+  plot?: string | null;
+  language?: string | null;
+  image: string | null;
+  cover_image: string | null;
+  backdrop?: string | null;
+  sources: string[];
+};
+
+export type MovieSummary = {
+  id: number | string;
+  provider: MovieProviderName;
+  provider_id: string;
+  name: string;
+  year: number | null;
+  rating: number | null;
+  imdb_rating: number | null;
+  image: string | null;
+  cover_image: string | null;
+  backdrop?: string | null;
+  genres?: string[];
+  views?: number | null;
+  likes?: number | null;
+  sources: string[];
+  cache_status?: unknown;
+};
