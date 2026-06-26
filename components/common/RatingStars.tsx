@@ -2,7 +2,7 @@ function StarIcon({ filled = true }: { filled?: boolean }) {
   return (
     <svg
       aria-hidden="true"
-      className={`h-4 w-4 ${filled ? "text-[#ff9f00]" : "text-white/40"}`}
+      className={`h-5 w-5 ${filled ? "text-[#ff9f00]" : "text-white/40"}`}
       viewBox="0 0 20 20"
       fill="currentColor"
     >

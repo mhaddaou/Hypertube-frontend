@@ -1,10 +1,21 @@
+"use server";
+
 import { API_BASE_URL, buildAuthHeaders } from "@/lib/apiClient";
 import { mapMovieDetailsToMovie, mapMovieSummaryToMovie } from "@/lib/movieMappers";
 import type { Movie, MovieDetailsSummary, MovieSummary } from "@/types/movie";
 
-export async function getMovies(): Promise<Movie[]> {
+export interface GetMoviesParams {
+  page?: number;
+  limit?: number;
+}
+
+export async function getMovies(params: GetMoviesParams = {}): Promise<Movie[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/movies`, {
+    const url = new URL(`${API_BASE_URL}/api/movies`);
+    if (params.page) url.searchParams.set("page", String(params.page));
+    if (params.limit) url.searchParams.set("limit", String(params.limit));
+
+    const response = await fetch(url, {
       cache: "no-store",
       headers: buildAuthHeaders(),
     });
@@ -14,6 +25,7 @@ export async function getMovies(): Promise<Movie[]> {
     }
 
     const movies = (await response.json()) as MovieSummary[];
+
     return Array.isArray(movies) ? movies.map(mapMovieSummaryToMovie) : [];
   } catch {
     return [];

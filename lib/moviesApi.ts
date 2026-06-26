@@ -91,10 +91,6 @@ export async function getMovieSuggestions(movieId: number): Promise<Movie[]> {
   return payload.data.movies.map(mapYtsMovieToMovie).filter((movie) => movie.id > 0);
 }
 
-export async function getPopularMovies() {
-  return getMovies({ limit: 5, minimumRating: 6, sortBy: "rating", orderBy: "desc" });
-}
-
 export async function getFeaturedMovie(queryTerm = "spider man no way home") {
   const movies = await getMovies({ limit: 5, queryTerm, sortBy: "rating", orderBy: "desc" });
   const movie =

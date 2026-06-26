@@ -83,7 +83,7 @@ export type MovieDetailsSummary = {
   name: string;
   imdb_rating: number | null;
   year: number | null;
-  length: number | null;
+  runtime: number | null;
   genre?: string | null;
   director?: string | null;
   cast?: string | null;
@@ -103,10 +103,12 @@ export type MovieSummary = {
   year: number | null;
   rating: number | null;
   imdb_rating: number | null;
+  runtime?: number | null;
   image: string | null;
   cover_image: string | null;
   backdrop?: string | null;
   genres?: string[];
+  plot?: string | null;
   views?: number | null;
   likes?: number | null;
   sources: string[];

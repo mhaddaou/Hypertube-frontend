@@ -26,53 +26,52 @@ function BookmarkIcon() {
 }
 
 export function DetailsHero({ movie }: { movie: Movie }) {
-  const metadata = [
-    movie.runtime,
-    movie.year,
-    movie.genres.join(" / "),
-    movie.language || movie.quality,
-  ].filter(Boolean);
+  const metadata = [movie.year, movie.runtime, ...movie.genres].filter(Boolean);
 
   return (
-    <section className="relative isolate min-h-[450px] overflow-hidden bg-[#050505] pb-12 pt-[7.5rem] sm:min-h-[500px] sm:pt-[8.5rem] lg:min-h-[540px] lg:pt-32">
-      <Image
-        src={movie.backgroundImage}
-        alt=""
-        fill
-        priority
-        quality={92}
-        sizes="100vw"
-        className="absolute inset-0 -z-30 object-cover object-center"
-      />
-      <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,0.6)_0%,rgba(5,5,5,0.46)_44%,rgba(5,5,5,0.14)_100%),linear-gradient(0deg,rgba(5,5,5,0.68)_0%,rgba(5,5,5,0.08)_44%,rgba(5,5,5,0.28)_100%)]" />
-
+    <section className="relative isolate overflow-hidden bg-[#050505]">
       <DetailsNav />
 
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
-        <div className="max-w-2xl">
-          <p className="text-sm font-bold italic text-white/90">Movie</p>
-          <h1 className="mt-7 font-serif text-4xl font-bold italic leading-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl">
-            {movie.title}
-          </h1>
-          <p className="mt-4 text-xs font-semibold italic text-white/75 sm:text-sm">
-            {metadata.join(" / ")}
-          </p>
-          <p className="mt-4 line-clamp-4 max-w-xl text-sm font-medium leading-6 text-white/82">
-            {movie.summary}
-          </p>
+      <div className="relative min-h-112.5 pb-12 pt-10 sm:min-h-125 sm:pt-12 lg:min-h-135 lg:pt-16">
+        <Image
+          src={movie.backgroundImage}
+          alt=""
+          fill
+          priority
+          quality={92}
+          sizes="100vw"
+          className="absolute inset-0 -z-30 object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,0.6)_0%,rgba(5,5,5,0.46)_44%,rgba(5,5,5,0.14)_100%),linear-gradient(0deg,rgba(5,5,5,0.68)_0%,rgba(5,5,5,0.08)_44%,rgba(5,5,5,0.28)_100%)]" />
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            <ButtonLink
-              href={`/movies/${movie.id}/watch`}
-              className="px-5"
-            >
-              <PlayIcon />
-              Play now
-            </ButtonLink>
-            <Button variant="outline" className="border-white/80 bg-black/20 px-5">
-              <BookmarkIcon />
-              add watchlist
-            </Button>
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
+          <div className="max-w-2xl">
+            <p className="text-sm font-bold italic text-white/90">Movie</p>
+            <h1 className="mt-7 font-serif text-4xl font-bold italic leading-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl">
+              {movie.title}
+            </h1>
+            <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold italic text-white/75 sm:text-sm">
+              {metadata.map((item, index) => (
+                <span key={`${item}-${index}`} className="contents">
+                  {index > 0 ? <span className="text-primary/70">|</span> : null}
+                  <span>{index === 0 ? item : String(item).toLowerCase()}</span>
+                </span>
+              ))}
+            </p>
+            <p className="mt-4 line-clamp-4 max-w-xl text-sm font-medium leading-6 text-white/82">
+              {movie.summary}
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <ButtonLink href={`/movies/${movie.id}/watch`} className="px-5">
+                <PlayIcon />
+                Play now
+              </ButtonLink>
+              <Button variant="outline" className="border-white/80 bg-black/20 px-5">
+                <BookmarkIcon />
+                add watchlist
+              </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { Navbar } from "@/components/layout/Navbar";
+import { AuthenticatedNavbar } from "@/components/layout/AuthenticatedNavbar";
 
 export function DetailsNav() {
-  return <Navbar variant="authenticated" />;
+  return <AuthenticatedNavbar />;
 }

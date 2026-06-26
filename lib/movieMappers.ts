@@ -13,6 +13,31 @@ function pickImage(...images: Array<string | undefined>) {
   return images.find((image) => typeof image === "string" && image.trim()) ?? FALLBACK_IMAGE;
 }
 
+const FALLBACK_SUMMARY_TEMPLATES: Array<(title: string, year: string, genre: string) => string> = [
+  (title, year, genre) =>
+    `${genre ? `A ${genre} story` : "A story"}${year !== "N/A" ? ` from ${year}` : ""} — stream "${title}" now on HyperTube.`,
+  (title, year, genre) =>
+    `Discover "${title}"${year !== "N/A" ? ` (${year})` : ""}${genre ? `, a standout ${genre} pick` : ""} on HyperTube.`,
+  (title, year, genre) =>
+    `"${title}" brings${genre ? ` ${genre}` : ""} drama to your screen${year !== "N/A" ? ` from ${year}` : ""}. Now streaming on HyperTube.`,
+  (title, year, genre) =>
+    `${genre ? `${genre} fans, meet` : "Meet"} "${title}"${year !== "N/A" ? `, released in ${year}` : ""}. Now streaming on HyperTube.`,
+];
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+}
+
+function buildFallbackSummary(title: string, year: string, genre?: string) {
+  const template =
+    FALLBACK_SUMMARY_TEMPLATES[hashString(title) % FALLBACK_SUMMARY_TEMPLATES.length];
+  return template(title, year, genre?.toLowerCase() ?? "");
+}
+
 export function getHeroBackgroundImage(movie: RawYtsMovie) {
   return pickImage(
     movie.background_image_original,
@@ -56,18 +81,22 @@ export function mapYtsMovieToMovie(movie: RawYtsMovie): Movie {
     ? SPIDER_MAN_REAL_BACKGROUND
     : getHeroBackgroundImage(movie);
 
+  const title = asText(movie.title, movie.title_long ?? "Untitled");
+  const year = movie.year ? String(movie.year) : "N/A";
+  const genres = Array.isArray(movie.genres) ? movie.genres.slice(0, 3) : [];
+
   return {
     id: movie.id ?? 0,
-    title: asText(movie.title, movie.title_long ?? "Untitled"),
-    year: movie.year ? String(movie.year) : "N/A",
+    title,
+    year,
     runtime: formatRuntime(movie.runtime),
     rating: typeof movie.rating === "number" && movie.rating > 0 ? movie.rating.toFixed(1) : "N/A",
     quality: asText(movie.quality, "HD").toUpperCase(),
     language: asText(movie.language, "EN").toUpperCase(),
-    genres: Array.isArray(movie.genres) ? movie.genres.slice(0, 3) : [],
+    genres,
     summary: asText(
       movie.description_full,
-      asText(movie.summary, "A cinematic selection from HyperTube."),
+      asText(movie.summary, buildFallbackSummary(title, year, genres[0])),
     ),
     posterImage: getPosterImage(movie),
     coverImage: isSpiderManNoWayHome(movie) ? SPIDER_MAN_REAL_BACKGROUND : getLandscapeImage(movie),
@@ -84,12 +113,15 @@ export function mapYtsMovieToMovie(movie: RawYtsMovie): Movie {
 
 export function mapMovieSummaryToMovie(movie: MovieSummary): Movie {
   const numericId = Number(movie.id);
+  const title = asText(movie.name, "Untitled");
+  const year = movie.year ? String(movie.year) : "N/A";
+  const genres = Array.isArray(movie.genres) ? movie.genres.slice(0, 3) : [];
 
   return {
     id: Number.isFinite(numericId) ? numericId : 0,
-    title: asText(movie.name, "Untitled"),
-    year: movie.year ? String(movie.year) : "N/A",
-    runtime: "N/A",
+    title,
+    year,
+    runtime: formatRuntime(movie.runtime ?? undefined),
     rating:
       typeof movie.imdb_rating === "number" && movie.imdb_rating > 0
         ? movie.imdb_rating.toFixed(1)
@@ -98,8 +130,8 @@ export function mapMovieSummaryToMovie(movie: MovieSummary): Movie {
           : "N/A",
     quality: "HD",
     language: "EN",
-    genres: Array.isArray(movie.genres) ? movie.genres.slice(0, 3) : [],
-    summary: "A cinematic selection from HyperTube.",
+    genres,
+    summary: asText(movie.plot, buildFallbackSummary(title, year, genres[0])),
     posterImage: pickImage(movie.image ?? undefined, movie.cover_image ?? undefined),
     coverImage: pickImage(movie.cover_image ?? undefined, movie.image ?? undefined),
     backgroundImage: pickImage(
@@ -113,20 +145,23 @@ export function mapMovieSummaryToMovie(movie: MovieSummary): Movie {
 
 export function mapMovieDetailsToMovie(movie: MovieDetailsSummary): Movie {
   const numericId = Number(movie.id);
+  const title = asText(movie.name, "Untitled");
+  const year = movie.year ? String(movie.year) : "N/A";
+  const genres = asText(movie.genre).split(",").map((genre) => genre.trim()).filter(Boolean).slice(0, 3);
 
   return {
     id: Number.isFinite(numericId) ? numericId : 0,
-    title: asText(movie.name, "Untitled"),
-    year: movie.year ? String(movie.year) : "N/A",
-    runtime: formatRuntime(movie.length ?? undefined),
+    title,
+    year,
+    runtime: formatRuntime(movie.runtime ?? undefined),
     rating:
       typeof movie.imdb_rating === "number" && movie.imdb_rating > 0
         ? movie.imdb_rating.toFixed(1)
         : "N/A",
     quality: "HD",
     language: asText(movie.language, "EN").toUpperCase(),
-    genres: asText(movie.genre).split(",").map((genre) => genre.trim()).filter(Boolean).slice(0, 3),
-    summary: asText(movie.plot, "A cinematic selection from HyperTube."),
+    genres,
+    summary: asText(movie.plot, buildFallbackSummary(title, year, genres[0])),
     posterImage: pickImage(movie.image ?? undefined, movie.cover_image ?? undefined),
     coverImage: pickImage(movie.cover_image ?? undefined, movie.image ?? undefined),
     backgroundImage: pickImage(

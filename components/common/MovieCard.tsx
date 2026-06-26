@@ -5,8 +5,8 @@ import type { Movie } from "@/types/movie";
 
 function RatingPill({ rating }: { rating: string }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[#ff9f00] px-2 py-0.5 text-[10px] font-black text-black">
-      <span aria-hidden="true">&#9733;</span>
+    <span className="inline-flex h-5 items-center gap-1 rounded-full bg-primary/25 pr-2.5 text-[11px] font-bold text-white">
+      <Image src="/icons/stars.svg" alt="" width={14} height={14} className="h-full w-auto pr-1" aria-hidden="true" />
       {rating}
     </span>
   );
@@ -19,31 +19,44 @@ export function PosterMovieCard({ movie }: { movie: Movie }) {
     <Link
       href={href}
       aria-disabled={movie.id <= 0}
-      className="group w-[150px] shrink-0 snap-start sm:w-[166px] lg:w-[172px]"
+      className="group w-43 shrink-0 snap-start sm:w-47.5 lg:w-49.5"
     >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-white/10 bg-zinc-950 shadow-xl shadow-black/50 transition duration-300 group-hover:-translate-y-1 group-hover:border-[#ff9f00]/80 group-hover:shadow-[0_0_24px_rgba(255,159,0,0.2)]">
+      <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-primary bg-zinc-950 shadow-xl shadow-black/50 transition duration-300 group-hover:shadow-[0_0_24px_rgba(255,159,0,0.2)]">
         <Image
           src={movie.posterImage}
           alt={`${movie.title} poster`}
           fill
           quality={90}
-          sizes="(min-width: 1024px) 176px, 158px"
-          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+          sizes="(min-width: 1024px) 198px, 180px"
+          className="object-cover transition duration-500 group-hover:scale-[1.06]"
         />
       </div>
 
       <div className="mt-3">
-        <h3 className="line-clamp-2 min-h-[32px] text-xs font-bold leading-4 text-white">
+        <h3 className="line-clamp-2 min-h-[32px] font-lemonada text-sm font-bold leading-5 text-primary">
           {movie.title}
         </h3>
-        <p className="mt-1 text-[10px] font-medium text-white/55">
-          {movie.year} / {movie.runtime} / {movie.quality}
+        <p className="mt-1 font-lemonada text-xs font-medium text-white/55">
+          {movie.year} &nbsp; {movie.runtime}
         </p>
-        <div className="mt-2">
+        <div className="mt-2 font-lemonada">
           <RatingPill rating={movie.rating} />
         </div>
       </div>
     </Link>
+  );
+}
+
+export function PosterMovieCardSkeleton() {
+  return (
+    <div className="w-43 shrink-0 snap-start sm:w-47.5 lg:w-49.5" aria-hidden="true">
+      <div className="aspect-2/3 animate-pulse rounded-lg border border-white/10 bg-white/10" />
+      <div className="mt-3 space-y-2">
+        <div className="h-4 w-3/4 animate-pulse rounded bg-white/10" />
+        <div className="h-3 w-1/2 animate-pulse rounded bg-white/10" />
+        <div className="h-5 w-12 animate-pulse rounded-full bg-white/10" />
+      </div>
+    </div>
   );
 }
 
