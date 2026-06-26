@@ -9,7 +9,7 @@ The project has three pieces you need running at once:
 ## Prerequisites
 
 - Node.js 20+
-- npm (or pnpm)
+- pnpm (or pnpm)
 - Docker + Docker Compose (easiest way to run Postgres)
 
 ## 1. Clone both repos
@@ -51,9 +51,9 @@ JWT_SECRET="anything-random-for-local-dev"
 Then install, migrate, and start:
 
 ```bash
-npm install
+pnpm install
 npx prisma migrate dev
-npm run start:dev
+pnpm run start:dev
 ```
 
 - API runs at **http://localhost:5000**
@@ -66,8 +66,8 @@ In a separate terminal:
 ```bash
 cd Hypertube-frontend/hypertube
 echo "NEXT_PUBLIC_API_URL=http://localhost:5000" > .env.local
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 - Frontend runs at **http://localhost:3000**
